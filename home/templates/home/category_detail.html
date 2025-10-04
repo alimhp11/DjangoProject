@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>دسته‌بندی ورزشی</title>
+    <style>
+
+    </style>
+
+    <body>
+    <header>🏆 دسته‌بندی ورزشی</header>
+
+    <div class="layout">
+        <!-- تبلیغات سمت راست -->
+        <aside class="sidebar">
+            <div class="ad">
+                <img src="https://via.placeholder.com/200x250" alt="تبلیغ ۱">
+                تبلیغ شماره ۱
+            </div>
+            <div class="ad">
+                <img src="https://via.placeholder.com/200x250" alt="تبلیغ ۲">
+                تبلیغ شماره ۲
+            </div>
+        </aside>
+
+        <!-- پست‌ها -->
+        <main class="posts">
+            {% for item in clist %}
+                <div class="card">
+                    {% if item.image %}
+                        <img src='{{ item.image.url }}' alt="خبر ورزشی">
+                    {% else %}
+                        <img src='' alt="خبر ورزشی">
+                    {% endif %}
+                    <div class="card-content">
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.description }}</p>
+                        <a href="#" class="btn">ادامه مطلب</a>
+
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- تبلیغات سمت چپ -->
+            <aside class="sidebar">
+                <div class="ad">
+                    <img src="https://via.placeholder.com/200x250" alt="تبلیغ ۳">
+                    تبلیغ شماره ۳
+                </div>
+                <div class="ad">
+                    <img src="https://via.placeholder.com/200x250" alt="تبلیغ ۴">
+                    تبلیغ شماره ۴
+                </div>
+            </aside>
+    </div>
+
+    <footer>
+        © 2025 - همه حقوق محفوظ است
+    </footer>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load static %}
+<header>
+    <div class="container">
+        <div id="branding">
+            <h1><span class="highlight">گناوه</span> خبر</h1>
+        </div>
+
+
+
+                <li class="category-menu"><a href={% url 'home_app:category' %}>خانه</a></li>
+
+                {% for i in categories %}
+                    <li class="category-menu"><a href=>{{ i.title }}</a></li>
+
+                {% endfor %}
+
+
+        <form action="" method="post">
+            <div id="search">
+                <input type="text" placeholder="جستجو...">
+                <i class="fas fa-search"></i>
+            </div>
+        </form>
+
+    </div>
+</header>

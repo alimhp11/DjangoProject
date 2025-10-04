@@ -1,0 +1,132 @@
+{% extends "base/base.html" %}
+{% block title %}صفحه اصلی{% endblock %}
+{% block content %}
+
+    <div class="row">
+
+        <!-- محتوای اصلی -->
+        <div class="col-lg-8">
+
+            <!-- اسلایدر -->
+            <div id="mainSlider" class="carousel slide mb-4" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for item in news|slice:3 %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" class="d-block w-100 slider-img" alt="{{ item.title }}">
+
+                            {% else %}
+                                <img src="" class="d-block w-100 slider-img" alt="{{ item.title }}">
+                            {% endif %}
+                            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                                <h5>{{ item.title }}</h5>
+                                <p>{{ item.description|truncatewords:20 }}</p>
+                                <a href="{% url 'home_app:news' item.slug item.id %}" class="btn btn-sm btn-primary">ادامه
+                                    خبر</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#mainSlider" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#mainSlider" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+
+            <!-- لیست خبرها -->
+            <h4 class="mb-3">آخرین خبرها</h4>
+            {% for n in news %}
+                <div class="card mb-3 shadow-sm">
+                    {% if n.image %}
+                        <img src="{{ n.image.url }}" class="card-img-top" alt="{{ n.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ n.title }}</h5>
+                        <p class="card-text">{{ n.description|truncatewords:30 }}</p>
+                        <small class="text-muted">🗓 {{ n.jalali_date }} | 👁 {{ n.view.count }}</small><br>
+                        <a href="{% url 'home_app:news' n.slug n.id %}" class="btn btn-sm btn-outline-primary mt-2">ادامه
+                            مطلب</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>خبری موجود نیست!</p>
+            {% endfor %}
+
+            <!-- صفحه‌بندی -->
+            <nav class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                        </li>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">بعدی</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        </div>
+
+        <!-- ستون کناری -->
+        <div class="col-lg-4">
+
+            <!-- پربازدیدترین‌ها -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">پربازدیدترین‌ها</div>
+                <ul class="list-group list-group-flush">
+                    {% for item in order_view %}
+                        <li class="pagination">
+                            <a  href="{% url 'home_app:news' item.slug item.id %}">{{ item.title }}</a>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- تبلیغات -->
+            <div class="mb-4">
+                {% for i in AD %}
+                    {% if i.image %}
+                        <a href="{{ i.address }}"><img src="{{ i.image.url }}" class="img-fluid rounded shadow-sm"
+                                                       alt="تبلیغات"></a>
+                    {% else %}
+                        <img src="" class="img-fluid rounded shadow-sm" alt="تبلیغات">
+
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+
+            <!-- دسته‌بندی‌ها -->
+            <div class="card">
+                <div class="card-header bg-dark text-white">دسته‌بندی‌ها</div>
+                <ul class="list-group list-group-flush">
+                    {% for cat in categories %}
+                        <li class="category-menu"><a href="#">{{ cat.title }}</a></li>
+                    {% endfor %}
+                </ul>
+
+
+            </div>
+            <div>
+                <ul>
+                    {% for cat in categories %}
+                        <li class="featured-news"><a href="#"><img src="" alt=""></a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
