@@ -1,4 +1,11 @@
-   function handleNewsletterSignup(event) {
+
+
+
+
+
+
+
+function handleNewsletterSignup(event) {
         event.preventDefault();
         const email = event.target.querySelector('input[type="email"]').value;
         alert(`Thank you for subscribing with email: ${email}! You'll receive our daily newsletter starting tomorrow.`);
@@ -76,3 +83,7 @@ tabs.forEach(tab => {
     tab.classList.add('active');
   });
 });
+
+
+//اسلایدر
+

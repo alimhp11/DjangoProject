@@ -1,106 +1,58 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block content %}
-    <body class="bg-gray-50 font-sans">
-    <!-- Header -->
-
-
-    <div class="container mx-auto px-4 py-8" dir="rtl">
-        <div class="news-ticker" dir="rtl">
-            <div class="ticker-header">
-                <span class="active">اخبار داغ</span>
-            </div>
-
-            <div class="ticker-content">
-                <ul id="ticker-list">
-                    {% for i in news %}
-                    <li>{{ i.summary_description}}</li>
-
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <!-- ساختار کلی سه‌ستونه -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-
-            <!-- ستون راست (مثلاً پربازدید و برگزیده) -->
-            <aside class="lg:col-span-1 flex flex-col gap-6">
-                <!-- باکس پربازدیدترین‌ها -->
-                <div class="bg-white shadow-md rounded-xl p-4">
-                    <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-3">پربازدیدترین‌ها</h3>
-                    <ul class="space-y-2 text-sm text-gray-700">
-                        <li><a href="#" class="hover:text-blue-600">📌 خبر شماره ۱ پربازدید</a></li>
-                        <li><a href="#" class="hover:text-blue-600">📌 خبر شماره ۲ پربازدید</a></li>
-                        <li><a href="#" class="hover:text-blue-600">📌 خبر شماره ۳ پربازدید</a></li>
-                    </ul>
-                </div>
-
-                <!-- باکس برگزیده‌ها -->
-                <div class="bg-white shadow-md rounded-xl p-4">
-                    <h3 class="text-lg font-bold text-purple-700 border-b pb-2 mb-3">برگزیده‌ها</h3>
-                    <ul class="space-y-2 text-sm text-gray-700">
-                        <li><a href="#" class="hover:text-purple-600">⭐ خبر ویژه شماره ۱</a></li>
-                        <li><a href="#" class="hover:text-purple-600">⭐ خبر ویژه شماره ۲</a></li>
-                        <li><a href="#" class="hover:text-purple-600">⭐ خبر ویژه شماره ۳</a></li>
-                    </ul>
-                </div>
-            </aside>
-
-            <!-- ستون وسط (اخبار اصلی) -->
-            <main class="lg:col-span-3">
+{% block slider %}
+    <section class="top-news">
+        <h2>اخبار ویژه</h2>
+        <div class="slider-container">
+            <button class="slide-btn prev-btn">❮</button>
+            <div class="slider" id="infinite-slider">
                 {% for i in news %}
-                    <article
-                            class="bg-white rounded-xl shadow-md overflow-hidden mb-6 flex flex-col md:flex-row-reverse text-right">
-                        <div class="md:w-1/3 w-full relative">
-                            <img src="{{ i.image.url }}" alt="{{ i.title }}" class="w-full h-64 object-cover">
-                            <div class="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                {{ i.category.title }}
-                            </div>
-                        </div>
-                        <div class="p-6 flex flex-col justify-between md:w-2/3">
-                            <div>
-                                <h2 class="text-2xl font-bold text-gray-900 mb-3">{{ i.title }}</h2>
-                                <p class="text-gray-700 mb-4 leading-relaxed">{{ i.summary_description }}</p>
-                            </div>
-                            <div class="flex items-center justify-between text-sm text-gray-500">
-                                <span>توسط: تحریریه</span>
-                                <span>{{ i.created|timesince }} پیش</span>
-                            </div>
-                        </div>
-                    </article>
+                    <div class="slide">
+                        <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                        <p>{{ i.title }}</p>
+                    </div>
                 {% endfor %}
-            </main>
-
-            <!-- ستون چپ (مثلاً تازه‌ترین‌ها و اقتصادی) -->
-            <aside class="lg:col-span-1 flex flex-col gap-6">
-                <!-- باکس تازه‌ترین‌ها -->
-                <div class="bg-white shadow-md rounded-xl p-4">
-                    <h3 class="text-lg font-bold text-green-700 border-b pb-2 mb-3">تازه‌ترین‌ها</h3>
-                    <ul class="space-y-2 text-sm text-gray-700">
-                        <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۱ تازه</a></li>
-                        <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۲ تازه</a></li>
-                        <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۳ تازه</a></li>
-                    </ul>
-                </div>
-
-                <!-- باکس اقتصادی -->
-                <div class="bg-white shadow-md rounded-xl p-4">
-                    <h3 class="text-lg font-bold text-red-700 border-b pb-2 mb-3">اقتصادی</h3>
-                    <ul class="space-y-2 text-sm text-gray-700">
-                        <li><a href="#" class="hover:text-red-600">💰 خبر اقتصادی ۱</a></li>
-                        <li><a href="#" class="hover:text-red-600">💰 خبر اقتصادی ۲</a></li>
-                        <li><a href="#" class="hover:text-red-600">💰 خبر اقتصادی ۳</a></li>
-                    </ul>
-                </div>
-            </aside>
-
+            </div>
+            <button class="slide-btn next-btn">❯</button>
         </div>
-    </div>
+    </section>
+
+    <script src="{% static 'js/slider.js' %}"></script>
+    {% endblock %}
 
 
-    <script class="{% static 'js/home.js' %}"></script>
 
-    </body>
+{% block content %}
+    <main class="lg:col-span-3">
+        {% for i in news %}
+            <article
+                    class="bg-white overflow-hidden flex flex-col md:flex-row-reverse text-right border-b border-gray-200">
+                <div class="md:w-1/3 w-full relative">
+                    <img src="{{ i.image.url }}" alt="{{ i.title }}" class="w-full h-64 object-cover">
+                    <div class="absolute top-3 right-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {{ i.category.title }}
+                    </div>
+                </div>
+                <div class="p-6 flex flex-col justify-between md:w-2/3">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-3">{{ i.title }}</h2>
+                        <p class="text-gray-700 mb-4 leading-relaxed">{{ i.summary_description }}</p>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>توسط: تحریریه</span>
+                        <span>{{ i.created|timesince }} پیش</span>
+                    </div>
+                </div>
+            </article>
+
+            {% if forloop.counter == 3 %}
+                <!-- تبلیغ وسط خبرها -->
+                <div class="ad-horizontal mid-news">
+                    <img src="{% static 'images/ads/banner-inline.jpg' %}" alt="تبلیغ درون خبرها">
+                </div>
+            {% endif %}
+        {% endfor %}
+    </main>
 {% endblock %}
 
+بله، بک‌گراند body رو به `bg-yellow-100` تغییر دادم که یک رنگ خاکی روشن (خاکی) گرم و ملایم هست. اگر می‌خوای تیره‌تر یا روشن‌تر بشه (مثل `bg-yellow-200` یا `bg-amber-100`)، بگو تا تنظیم کنم! 😊

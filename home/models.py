@@ -14,7 +14,7 @@ class Category(models.Model):
 class New(models.Model):
 	title = models.CharField(max_length = 100)
 	category = models.ForeignKey(Category, on_delete = models.CASCADE, related_name = 'c_detail')
-	summary_description = models.TextField(max_length = 50,null = True, blank = True)
+	summary_description = models.TextField(null = True, blank = True)
 	description = models.TextField()
 	image = models.ImageField(upload_to = 'news/', null = True, blank = True)
 	slug = models.SlugField(max_length = 100, unique = True, blank = True, null = True)

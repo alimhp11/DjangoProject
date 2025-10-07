@@ -16,7 +16,7 @@
             <nav class="hidden md:flex space-x-8">
                 <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">خانه</a>
                 {% for i in categories %}
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">{{ i.title }}</a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">{{ i.title }}</a>
                 {% endfor %}
 
             </nav>
@@ -29,6 +29,67 @@
         </div>
     </div>
 </header>
-{% block content %}
-{% endblock %}
+
+<body class="bg-gray-200 font-sans body">
+
+<!-- کل محتوا در یک container وسط چین -->
+<div class="page-container">
+
+    <!-- 🔹 تبلیغ افقی بالای صفحه -->
+    <div class="ad-horizontal">
+        <img src="{% static 'images/ads/banner-top.jpg' %}" alt="تبلیغات بالا">
+    </div>
+
+    <!-- 🔹 اسلایدر اخبار ویژه -->
+{% block slider %}{% endblock %}
+
+    <!-- 🔹 تبلیغ بین اسلایدر و محتوا -->
+    <div class="ad-horizontal mid-ad">
+        <img src="{% static 'images/ads/banner-middle.jpg' %}" alt="تبلیغات میان صفحه">
+    </div>
+
+    <!-- 🔹 ساختار سه‌ستونه -->
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-8">
+
+        <!-- ستون راست -->
+        <aside class="lg:col-span-1 flex flex-col gap-6">
+            <!-- تبلیغ عمودی راست -->
+            <div class="ad-vertical hidden lg:block">
+                <img src="{% static 'images/ads/ad-right.jpg' %}" alt="تبلیغات راست">
+            </div>
+
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <h3 class="text-lg font-bold text-blue-700 border-b pb-2 mb-3">پربازدیدترین‌ها</h3>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    {% for i in top_views %}
+                    <li><a href="#" class="hover:text-blue-600">{{i.title}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% block content %}
+        {% endblock %}
+        <!-- ستون چپ -->
+        <aside class="lg:col-span-1 flex flex-col gap-6">
+            <!-- تبلیغ عمودی چپ -->
+            <div class="ad-vertical  hidden lg:block">
+                {% for i in AD %}
+                    <img src="{{ i.image.url }}" alt="تبلیغات چپ">
+                {% endfor %}
+            </div>
+
+            <div class="bg-white shadow-md rounded-xl p-4">
+                <h3 class="text-lg font-bold text-green-700 border-b pb-2 mb-3">تازه‌ترین‌ها</h3>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۱ تازه</a></li>
+                    <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۲ تازه</a></li>
+                    <li><a href="#" class="hover:text-green-600">🕒 خبر شماره ۳ تازه</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</div> <!-- پایان page-container -->
+
+<footer>© 2025 - تمامی حقوق محفوظ است</footer>
+
 </html>
